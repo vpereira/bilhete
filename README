@@ -1,0 +1,38 @@
+Engenharia reversa Bilhete Unico
+
+O Cartão é o MIFARE CLASSIC 4K
+
+Eu tenho 3 cartões, os arquivos *.mfd são as chaves de authenticação de cada setor. Pra variar, usam chaves default. Dai todo dia, depois de andar de onibus, venho para casa e leio o conteudo do cartão, salvando os dumps no diretórios. O cada dump está identificado com um timestamp. O timestamp não está correto. O dia, ano e mes sim, mas a hora e o minuto não.
+
+O Cartão do Bilhete unico funciona da seguinte maneira:
+
+* Você carrega em uma central (casa lotérica)
+* Toda vez que se entra no onibus vc passa o cartão. Se for a primeira vez, o valor é descontado. Se não for a primeira vez mas tiver dentro do periodo de validade (1 hora), então o valor não é descontado.
+
+* Os *.dump são dump binários. Deles eu extrai com o hexdump -v os arquivos *.hex ai se pode comparar os *.hex com um visualizador de diff (vimdiff por exemplo)
+
+Documentos que podem ser uteis:
+
+* http://www.libnfc.org/community/topic/160/mifare-data-analysis/
+* http://code.google.com/p/mfcuk/wiki/MifareClassicKnownCardsDataFormat
+* http://www.youtube.com/watch?v=wSYcTl0B7MY (video from CCC, você tem que assistir)
+
+* PlainText conhecidos:
+
+No cartão 9e4937b0:
+* No ultimo dump (201112011015), eu fiz somente uma recarga, de 8 reais, e no final tem R$ 10.02 (irei confirmar o saldo amanhã)
+* Nos penultimo (201111281515) e antipenultimo (201111281500) usei o cartão 2 x mas só foi descontado uma vez.
+
+Antipenultimo usei o onibus 5154-10
+Penultimo usei o onibus 6418-10
+
+No Cartão fcd4cf1f:
+* Usei o trem, peguei na estação berrine até estação shopping morumbi e voltei. No caso do trem se cobra 2x portanto, deve constar como ultima viagem shopping morumbi -> berrine. 
+
+No Cartão 7eb2258a
+* Tem sempre o mesmo onibus, numero 6414
+
+* novos testes que irei fazer:
+
+* pegar 2 x O MESMO onibus, sem cobrar o valor (dentro da uma hora de validade) pra ver se muda algo
+* Comprar um cartão NOVO com crédito e ver se conseguimos fazer a engenharia reversa do valor
