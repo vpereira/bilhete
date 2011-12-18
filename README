@@ -45,3 +45,11 @@ No Cartão 7eb2258a
 
 * pegar 2 x O MESMO onibus, sem cobrar o valor (dentro da uma hora de validade) pra ver se muda algo
 * Comprar um cartão NOVO com crédito e ver se conseguimos fazer a engenharia reversa do valor
+
+
+
+Algo o que eu já vi:
+
+Sector 0, Sector 1, Sector 2 não há mudança
+Sector 3 e Sector 4 são repetidos
+Sector 8 e Sector 9
