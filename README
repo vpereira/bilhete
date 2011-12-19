@@ -1,6 +1,25 @@
 Engenharia reversa Bilhete Unico
 
-O Cartão é o MIFARE CLASSIC 4K
+O Cartão é o MIFARE CLASSIC 4K. Os dados são organizados em setores, cada setor com 4 blocos de 16 bytes. 
+O primeiro bloco eh read-only e tem o UID do cartao + dados do fabricante do cartao
+O ultimo bloco de cada sector sempre tem as chaves a e b e o direito de acesso. O ultimo sector estar organizado mais ou menos assim (olhar um hexdump qualquer):
+
+chave A            direitos   chave b
+----------------- ----------  ---------------- 
+a0 a1 a2 a3 a4 a5 08 77 8f 69 b0 b1 b2 b3 b4 b5
+
+
+exemplo de como os dados sao organizados no cartao
+
+0000000 9e 49 37 b0 50 08 04 00 62 63 64 65 66 67 68 69 bloco 0, sector 0: uid do cartao 9e4937b0, dados do fabricante 0804006263646566676869
+0000010 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 bloco 1, sector 0
+0000020 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ..
+0000030 ff ff ff ff ff ff ff 07 80 69 ff ff ff ff ff ff bloco 3, sector 0: chave a, direitos de acesso e chave b
+0000040 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 bloco 0, sector 1
+0000050 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ..
+0000060 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ..
+0000070 a0 a1 a2 a3 a4 a5 08 77 8f 69 b0 b1 b2 b3 b4 b5 bloco 3, sector 1: chave a, direitos de acesso e chave b
+
 
 Eu tenho 3 cartões, os arquivos *.mfd são as chaves de authenticação de cada setor. Pra variar, usam chaves default. Dai todo dia, depois de andar de onibus, venho para casa e leio o conteudo do cartão, salvando os dumps no diretórios. O cada dump está identificado com um timestamp. O timestamp não está correto. O dia, ano e mes sim, mas a hora e o minuto não.
 
@@ -53,3 +72,6 @@ Algo o que eu já vi:
 Sector 0, Sector 1, Sector 2 não há mudança
 Sector 3 e Sector 4 são repetidos
 Sector 8 e Sector 9
+
+o sector 3, block 3 guarda ou valor ou timestamp. isso pq ao usar 2 x onibus no mesmo dia e sem cobrar denovo (dentro de periodo de 1 hora) os primeiros 7 bytes não mudaram. somente o ultimo (que pode ser a casa dos minutos em um timestamp ou um CRC para validar campo)
+
