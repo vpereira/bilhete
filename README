@@ -1,3 +1,10 @@
+Reverse engineering from public transportation cards used in SP back in the days.
+
+I did a lot of tests, backing up the card, using it and loading the backed up data, bringing back the credits as before.
+
+I did contact the authorities back in the days to report it. It is here just for historical reasons.. hardware used was an arduino with powerpack, case, sd cart and a NFC card wing. 
+That allowed me to generate the snapshots after every reacharge or spend.
+
 Engenharia reversa Bilhete Unico
 
 O Cartão é o MIFARE CLASSIC 4K. Os dados são organizados em setores, cada setor com 4 blocos de 16 bytes. 
